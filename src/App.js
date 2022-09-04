@@ -10,7 +10,9 @@ function App() {
       <button className="open-modal-btn" onClick={() => setOpen(true)}>
         ✨ Открыть окно
       </button>
-      <Modal open={open} setOpen={setOpen} />
+      <Modal open={open} setOpen={setOpen}>
+        <img src="https://media2.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif" alt="" />
+      </Modal>
     </div>
   );
 }
