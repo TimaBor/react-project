@@ -12,6 +12,7 @@ function App() {
       </button>
       <Modal open={open} setOpen={setOpen}>
         <img src="https://media2.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif" alt="" />
+        <h2>Hello World!</h2>
       </Modal>
     </div>
   );
