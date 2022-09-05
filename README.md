@@ -1,4 +1,4 @@
-# Проекты для начинающих на ReactJS
+# Проекты для начинающих на ReactJS11
 
 Все проекты разработаны для бесплатного курса на канале [Archakov Blog](https://www.youtube.com/c/ArchakovBlog)
 
