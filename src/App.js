@@ -1,4 +1,5 @@
 import './index.scss';
+import React from 'react';
 
 const questions = [
   {
@@ -22,37 +23,75 @@ const questions = [
   },
 ];
 
-function Result() {
+function Result({ correct }) {
+  const getNoun = (number, one, two, five) => {
+    let n = Math.abs(number);
+    n %= 100;
+    if (n >= 5 && n <= 20) {
+      return five;
+    }
+    n %= 10;
+    if (n === 1) {
+      return one;
+    }
+    if (n >= 2 && n <= 4) {
+      return two;
+    }
+    return five;
+  };
+
   return (
     <div className="result">
-      <img src="https://cdn-icons-png.flaticon.com/512/2278/2278992.png" />
-      <h2>Вы отгадали 3 ответа из 10</h2>
-      <button>Попробовать снова</button>
+      <img src="https://cdn-icons-png.flaticon.com/512/2278/2278992.png" alt="" />
+      <h2>
+        Вы отгадали {correct} {getNoun(correct, 'ответ', 'ответа', 'ответов')} из {questions.length}
+      </h2>
+      <a href="/">
+        <button>Попробовать снова</button>
+      </a>
     </div>
   );
 }
 
-function Game() {
+function Game({ question, onClickVariant, step }) {
+  const percentage = Math.round((step / questions.length) * 100);
+
   return (
     <>
       <div className="progress">
-        <div style={{ width: '50%' }} className="progress__inner"></div>
+        <div style={{ width: `${percentage}%` }} className="progress__inner"></div>
       </div>
-      <h1>Что такое useState?</h1>
+      <h1>{question.title}</h1>
       <ul>
-        <li>Это функция для хранения данных компонента</li>
-        <li>Это глобальный стейт</li>
-        <li>Это когда на ты никому не нужен</li>
+        {question.variants.map((obj, index) => (
+          <li onClick={() => onClickVariant(index)} key={index}>
+            {obj}
+          </li>
+        ))}
       </ul>
     </>
   );
 }
 
 function App() {
+  const [step, setStep] = React.useState(0);
+  const [correct, setCorrect] = React.useState(0);
+  const question = questions[step];
+
+  const onClickVariant = (index) => {
+    setStep(step + 1);
+    if (index === question.correct) {
+      setCorrect(correct + 1);
+    }
+  };
+
   return (
     <div className="App">
-      <Game />
-      {/* <Result /> */}
+      {step !== questions.length ? (
+        <Game step={step} question={question} onClickVariant={onClickVariant} />
+      ) : (
+        <Result correct={correct} />
+      )}
     </div>
   );
 }
